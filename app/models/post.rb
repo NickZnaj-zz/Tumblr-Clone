@@ -12,4 +12,9 @@ class Post < ActiveRecord::Base
     through: :author,
     source: :country
   )
+
+  def sibling_posts
+    # Post.where(author_id: author_id).where(':id IS NULL OR id != :id', id: id)
+    Post.where(author_id: author_id).where.not(id: id)
+  end
 end
