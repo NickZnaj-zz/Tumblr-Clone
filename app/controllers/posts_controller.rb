@@ -9,11 +9,15 @@ class PostsController < ApplicationController
 
   def index
     #instance method of the PostsController class.
-    posts = Post.all
+    @posts = Post.all
 
     # render({json: posts})
-    render json: posts
     # render json: posts2 #=> error, cannot render twice for single response.
+
+    # looks for a view called index in the posts folder
+    render :index
+    # ^^ we don't need to explicitly render index...rails figures it out
+    # because we're in the index action
   end
 
   def create
