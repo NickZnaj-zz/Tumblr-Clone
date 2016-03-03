@@ -9,12 +9,17 @@
 <body>
 
   <% if logged_in? %>
-  <p>Logged in as <%= current_user.name %></p>
+
+    <p>Logged in as <%= current_user.name %></p>
+
     <form action="<%= session_url %>" method="POST">
       <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
       <input type="hidden" name="_method" value="DELETE">
       <input type="submit" value="Log Out">
     </form>
+
+    <br>
+
   <% end %>
 
   <%= flash[:errors].join(", ") if flash[:errors] %>
