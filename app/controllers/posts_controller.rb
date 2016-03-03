@@ -11,7 +11,7 @@ class PostsController < ApplicationController
   def index
     #instance method of the PostsController class.
     @posts = Post.includes(:author).order(updated_at: :desc)
-
+    @post = Post.new
     # render({json: posts})
     # render json: posts2 #=> error, cannot render twice for single response.
 
