@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root "sessions#new"
   # get("/posts", {to: "posts#index"})
 
   # get "/posts", to: "posts#index"
@@ -11,6 +12,7 @@ Rails.application.routes.draw do
   # resources(:posts, {only: [:index, :show, :create]})
   resources :posts, only: [:index, :show, :create]
   resources :authors, only: [:create, :new]
+  resource :session, only: [:new, :create, :destroy]
   # resources :authors do
   #   resources :posts
   # end

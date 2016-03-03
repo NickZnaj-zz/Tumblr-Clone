@@ -9,7 +9,7 @@ class PostsController < ApplicationController
 
   def index
     #instance method of the PostsController class.
-    @posts = Post.all
+    @posts = Post.includes(:author).order(updated_at: :desc)
 
     # render({json: posts})
     # render json: posts2 #=> error, cannot render twice for single response.
@@ -26,17 +26,21 @@ class PostsController < ApplicationController
     #   body: params[:body]
     # )
     # post_params = params.require(:post).permit(:title, :body, :author_id)
-    post = Post.new(post_params)
-    if post.save
-      render json: post
+    @post = current_user.posts.new(post_params)
+    if @post.save
+      # render json: post
+      redirect_to posts_url
     else
-      render json: post.errors.full_messages, status: :unprocessable_entity
+      # render json: post.errors.full_messages, status: :unprocessable_entity
+      @posts = Post.includes(:author).order(updated_at: :desc)
+      flash[:errors] = @post.errors.full_messages
+      render :index
     end
   end
 
   def show
-    post = Post.find(params[:id])
-    render json: post
+    @post = Post.find(params[:id])
+    # render json: post
   end
 
   private
