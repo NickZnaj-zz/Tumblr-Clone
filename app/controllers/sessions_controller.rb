@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  before_action :ensure_logged_out, only: [:new, :create]
 
   def new
     @author = Author.new
