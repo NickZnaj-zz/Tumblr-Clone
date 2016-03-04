@@ -1,7 +1,5 @@
-<strong>
-  <a href="<%= post_url(@post) %>"><%= @post.title %></a>
-</strong>
-<em>by <%= @post.author.name %></em>
-<p><%= @post.body %></p>
+<%#= render "post", post: @post %>
+
+<%= render @post %>
 
 <a href="<%= posts_url %>">All the Posts!</a>

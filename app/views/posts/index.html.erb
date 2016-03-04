@@ -20,11 +20,7 @@
 <!-- your computer just gets plain ol' html-->
 
 <form action="<%= posts_url %>" method="post">
-  <input
-    type="hidden"
-    name="authenticity_token"
-    value="<%= form_authenticity_token %>"
-    >
+  <%= auth_token %>
 
   <label>Title
     <br>
@@ -44,15 +40,8 @@
 
 </form>
 
+<%# @posts.each do |post| %>
+  <%#= render "post", post: post %>
+<%# end %>
 
-<ul>
-  <% @posts.each do |post| %>
-    <li>
-      <strong>
-        <a href="<%= post_url(post) %>"><%= post.title %></a>
-      </strong>
-      <em>by <%= post.author.name %></em>
-      <p><%= post.body %></p>
-    </li>
-  <% end %>
-</ul>
+<%= render @posts %>

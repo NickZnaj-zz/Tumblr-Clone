@@ -11,12 +11,14 @@ class Author < ActiveRecord::Base
           # the associated table
       # foreign_key, to tell it which attribute to search by
 
-  belongs_to(
-    :country,
-    class_name: 'Country',
-    primary_key: :id,
-    foreign_key: :country_id
-  )
+  # belongs_to(
+  #   :country,
+  #   class_name: 'Country',
+  #   primary_key: :id,
+  #   foreign_key: :country_id
+  # )
+  has_many :author_countries
+  has_many :countries, through: :author_countries
 
   # has_many also creates a method
   # options hash includes:

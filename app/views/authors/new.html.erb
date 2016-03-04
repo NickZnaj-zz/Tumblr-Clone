@@ -1,14 +1,4 @@
 <h1>Make a new Author</h1>
 
-<form action="<%=authors_url%>" method="post">
-  <label>Name
-    <input type="text" name="author[name]">
-    <!-- Nest your params -->
-  </label>
+<%= render "form", author: @author %>
 
-  <label>country id
-    <input type="text" name="author[country_id]">
-  </label>
-
-  <input type="submit" value="create author!">
-</form>

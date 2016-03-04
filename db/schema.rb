@@ -11,21 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160302200844) do
+ActiveRecord::Schema.define(version: 20160302200845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "author_countries", force: :cascade do |t|
+    t.integer  "author_id",  null: false
+    t.integer  "country_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "author_countries", ["author_id"], name: "index_author_countries_on_author_id", using: :btree
+  add_index "author_countries", ["country_id"], name: "index_author_countries_on_country_id", using: :btree
+
   create_table "authors", force: :cascade do |t|
     t.string   "name",            null: false
-    t.integer  "country_id",      null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "session_token"
     t.string   "password_digest"
   end
-
-  add_index "authors", ["country_id"], name: "index_authors_on_country_id", using: :btree
 
   create_table "countries", force: :cascade do |t|
     t.string   "name"

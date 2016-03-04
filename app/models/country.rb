@@ -2,12 +2,14 @@
 # class name is singular SnakeCase
 class Country < ActiveRecord::Base
 
-  has_many(
-    :authors,
-    class_name: 'Author',
-    primary_key: :id,
-    foreign_key: :country_id
-  )
+  # has_many(
+  #   :authors,
+  #   class_name: 'Author',
+  #   primary_key: :id,
+  #   foreign_key: :country_id
+  # )
+  has_many :author_countries
+  has_many :authors, through: :author_countries
 
   # has_many :through
   # options hash accepts:
