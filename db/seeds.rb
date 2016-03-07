@@ -14,10 +14,10 @@ netherlands = Country.create!(name: "Netherlands!")
 Author.destroy_all
 jonathan = netherlands.authors.create!(name: "Tommy", password: "password")
 tommy = argentina.authors.create!(name: "Tommy", password: "password")
-lily = usa.create!(name: "Lily", password: "password")
-carl = usa.create!(name: "Carl", password: "password")
-fred = usa.create!(name: "Fred", password: "password")
-leen = usa.create!(name: "Leen", password: "password")
+lily = usa.authors.create!(name: "Lily", password: "password")
+carl = usa.authors.create!(name: "Carl", password: "password")
+fred = usa.authors.create!(name: "Fred", password: "password")
+leen = usa.authors.create!(name: "Leen", password: "password")
 
 Post.destroy_all
 lily_post = lily.posts.create!(title: "Lily is awesome at helping with lecture", body: "it's true!!!")

@@ -15,6 +15,11 @@ gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
   gem 'byebug'
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'faker'
+  gem 'factory_girl_rails'
 end
 
 group :development do
