@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  root "sessions#new"
   # get("/posts", {to: "posts#index"})
 
   # get "/posts", to: "posts#index"
@@ -22,4 +21,10 @@ Rails.application.routes.draw do
     # in file named cookies_controller.rb
   get 'set_cookie', to: 'cookies#set'
   get 'set_flash', to: 'cookies#set_flash'
+  
+  
+  root to: "static_pages#root"
+  namespace :api, defaults: {format: :json} do
+    resources :posts, only: [:index]
+  end
 end
