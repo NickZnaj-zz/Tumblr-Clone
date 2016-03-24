@@ -1,6 +1,7 @@
 var Store = require('flux/utils').Store;
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var PostConstants = require('../constants/post_constants');
+
 var PostStore = new Store(AppDispatcher);
 
 // debugger

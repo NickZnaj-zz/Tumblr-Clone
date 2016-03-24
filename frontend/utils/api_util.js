@@ -9,10 +9,6 @@ var ApiUtil = {
       dataType: "json",
       success: function (posts) {
         PostActions.postsReceived(posts);
-        // AppDispatcher.dispatch({
-        //   actionType: "POSTS_RECEIVED",
-        //   posts: posts
-        // });
       },
       error: function () {
         console.log("Api#fetch error!");
