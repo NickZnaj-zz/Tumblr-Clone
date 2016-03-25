@@ -2,6 +2,7 @@ var React = require("react");
 var PostStore = require("./../stores/post_store.js");
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ApiUtil = require('../utils/api_util');
+var Link = require('react-router').Link;
 
 var PostList = React.createClass({
 
@@ -46,7 +47,11 @@ var PostList = React.createClass({
     var postArticles = this.state.posts.map(function (post, i) {
       return (
         <article key={ i }>
-          <h3>{ post.title }</h3>
+          <h3>
+            <Link to={"/posts/" + post.id}>
+              { post.title }
+            </Link>
+          </h3>
           <footer>{ post.author_name }</footer>
           <p>{ post.body }</p>
         </article>
@@ -56,9 +61,10 @@ var PostList = React.createClass({
     if (postArticles.length === 0) {
       postArticles = <p>Loading posts...</p>;
     }
-
     return (
       <section className="posts">
+        {this.props.children}
+        <hr />
         <h2>All the Posts!!!!({this.state.postsLength})</h2>
         { postArticles }
       </section>
