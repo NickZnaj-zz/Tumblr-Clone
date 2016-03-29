@@ -2,10 +2,6 @@
 [upgrade guides]
 (https://github.com/reactjs/react-router/blob/master/upgrade-guides/v2.0.0.md#programmatic-navigation)
 
-+ Route components
-
-+ Deep components
-
 
 
 ### Heroku
@@ -15,9 +11,10 @@
 
 What do we normally do before we can run our app in development?
 
-1.
-2.
-3.
+1. bundle install
+2. npm install
+3. webpack
+4. rake db:migrate, rake db:seed
 
 
 

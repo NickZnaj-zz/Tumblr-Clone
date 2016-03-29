@@ -3,11 +3,12 @@ var PostStore = require("./../stores/post_store.js");
 // var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ApiUtil = require('../utils/api_util');
 var Funny = require('./funny_component.jsx');
-var History = require('react-router').History;
 
 var PostShow = React.createClass({
-  // mixins is keyWord for react class
-  // mixins: [History],
+
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
 
   getInitialState: function () {
     return { post: null };
@@ -41,7 +42,7 @@ var PostShow = React.createClass({
   _goBack: function () {
     // Do lots of things
     setTimeout(function () {
-      this.props.history.pushState(null, "/posts");
+      this.context.router.push("/posts");
     }.bind(this), 1000);
   },
 
@@ -62,5 +63,6 @@ var PostShow = React.createClass({
     );
   }
 });
+
 
 module.exports = PostShow;

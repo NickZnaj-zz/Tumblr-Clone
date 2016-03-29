@@ -31805,13 +31805,14 @@
 	// var AppDispatcher = require('../dispatcher/app_dispatcher');
 	var ApiUtil = __webpack_require__(240);
 	var Funny = __webpack_require__(243);
-	var History = __webpack_require__(159).History;
 	
 	var PostShow = React.createClass({
 	  displayName: "PostShow",
 	
-	  // mixins is keyWord for react class
-	  // mixins: [History],
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
 	
 	  getInitialState: function () {
 	    return { post: null };
@@ -31842,7 +31843,7 @@
 	  _goBack: function () {
 	    // Do lots of things
 	    setTimeout(function () {
-	      this.props.history.pushState(null, "/posts");
+	      this.context.router.push("/posts");
 	    }.bind(this), 1000);
 	  },
 	
