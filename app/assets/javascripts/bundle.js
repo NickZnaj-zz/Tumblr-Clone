@@ -24866,7 +24866,8 @@
 	        this.state.postsLength,
 	        ")"
 	      ),
-	      postArticles
+	      postArticles,
+	      React.createElement("div", { className: "pic" })
 	    );
 	  }
 	

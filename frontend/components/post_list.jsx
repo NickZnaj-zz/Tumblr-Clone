@@ -67,6 +67,7 @@ var PostList = React.createClass({
         <hr />
         <h2>All the Posts!!!!({this.state.postsLength})</h2>
         { postArticles }
+        <div className="pic"></div>
       </section>
     );
   }
