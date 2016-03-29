@@ -96,7 +96,7 @@
 	      Route,
 	      { path: "/", component: App },
 	      React.createElement(IndexRoute, { component: PostList }),
-	      React.createElement(Route, { path: "posts/:id/", component: PostShow }),
+	      React.createElement(Route, { path: "posts/:id", component: PostShow }),
 	      React.createElement(Route, { path: "posts", component: PostList })
 	    )
 	  ), $("main")[0]

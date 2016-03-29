@@ -45,7 +45,7 @@ window.initializeApp = function () {
     <Router history={hashHistory} >
       <Route path="/" component={App} >
         <IndexRoute component={PostList} />
-        <Route path="posts/:id/" component={PostShow} />
+        <Route path="posts/:id" component={PostShow} />
 
         <Route path="posts" component={PostList} />
       </Route>
