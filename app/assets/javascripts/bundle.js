@@ -31804,6 +31804,7 @@
 	var PostStore = __webpack_require__(217);
 	// var AppDispatcher = require('../dispatcher/app_dispatcher');
 	var ApiUtil = __webpack_require__(240);
+	var Funny = __webpack_require__(243);
 	var History = __webpack_require__(159).History;
 	
 	var PostShow = React.createClass({
@@ -31871,12 +31872,34 @@
 	        "p",
 	        null,
 	        this.state.post.body
-	      )
+	      ),
+	      React.createElement(Funny, null)
 	    );
 	  }
 	});
 	
 	module.exports = PostShow;
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var Funny = React.createClass({
+	  displayName: 'Funny',
+	
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      null,
+	      ' HARHAR '
+	    );
+	  }
+	});
+	
+	module.exports = Funny;
 
 /***/ }
 /******/ ]);

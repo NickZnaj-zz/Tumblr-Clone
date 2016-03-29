@@ -2,6 +2,7 @@ var React = require("react");
 var PostStore = require("./../stores/post_store.js");
 // var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ApiUtil = require('../utils/api_util');
+var Funny = require('./funny_component.jsx');
 var History = require('react-router').History;
 
 var PostShow = React.createClass({
@@ -56,6 +57,7 @@ var PostShow = React.createClass({
         </button>
         <h2>{ this.state.post.title }</h2>
         <p>{ this.state.post.body }</p>
+        <Funny />
       </article>
     );
   }
