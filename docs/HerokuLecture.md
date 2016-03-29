@@ -10,7 +10,11 @@
 
 [a/A readings] (https://github.com/appacademy/capstone-project-curriculum/blob/master/readings/heroku-deployment.md)
 
+<<<<<<< HEAD
 What do we normally do before we can run our app in development?
+=======
+What do we normally do before we can run our app in development?
+>>>>>>> dd337468033d835c80c8e6f44d3849cb38b60d5b
 1.
 2.
 3.
@@ -23,19 +27,19 @@ What do we normally do before we can run our app in development?
 5. `heroku buildpacks:set heroku/ruby`
   `heroku buildpacks:add --index 1 heroku/nodejs`
 
-  ```js
-  // package.json
-  "engines": {
-   // Your versions of node and npm should go here
-   // Check this by running the `node -v` and `npm -v` commands in the root of your project
-   "node": "4.1.1",
-   "npm": "2.1.x"
-  },
+    ```js
+    // package.json
+    "engines": {
+     // Your versions of node and npm should go here
+     // Check this by running the `node -v` and `npm -v` commands in the root of your project
+     "node": "4.1.1",
+     "npm": "2.1.x"
+    },
 
-  "scripts": {
-   "postinstall": "./node_modules/.bin/webpack"
-  },
-  ```
+    "scripts": {
+     "postinstall": "./node_modules/.bin/webpack"
+    },
+    ```
 
 6. `git push heroku master`
   - `heroku run bundle exec rake db:migrate`
