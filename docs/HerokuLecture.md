@@ -1,6 +1,7 @@
 ###React Router upgrades:
 [upgrade guides]
 (https://github.com/reactjs/react-router/blob/master/upgrade-guides/v2.0.0.md#programmatic-navigation)
+
 + Route components
 
 + Deep components
@@ -30,7 +31,7 @@ What do we normally do before we can run our app in development?
 1. Install Heroku toolbelt
 2. `heroku login`
 3. `git remote add heroku heroku-git-url-here`
-4. `gem 'rails_12factor'`
+4. `gem 'rails_12factor'` (in group :production)
 5. `heroku buildpacks:set heroku/ruby`
   `heroku buildpacks:add --index 1 heroku/nodejs`
 
