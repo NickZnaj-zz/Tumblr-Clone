@@ -1,7 +1,11 @@
 class Author < ActiveRecord::Base
+  
+  include PgSearch
+  multisearchable :against => :name
+    
   attr_reader :password
 
-  after_initialize :ensure_session_token!
+  before_validation :ensure_session_token!
 
   # belongs_to is a method that accepts:
     # 1: a symbol which is the name of the new method you're creating

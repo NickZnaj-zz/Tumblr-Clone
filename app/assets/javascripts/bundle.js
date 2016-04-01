@@ -49,7 +49,8 @@
 	var ReactRouter = __webpack_require__(159);
 	
 	var PostList = __webpack_require__(216);
-	var PostShow = __webpack_require__(242);
+	var PostShow = __webpack_require__(244);
+	var Search = __webpack_require__(246);
 	
 	var Router = ReactRouter.Router;
 	var Route = ReactRouter.Route;
@@ -97,7 +98,8 @@
 	      { path: "/", component: App },
 	      React.createElement(IndexRoute, { component: PostList }),
 	      React.createElement(Route, { path: "posts/:id", component: PostShow }),
-	      React.createElement(Route, { path: "posts", component: PostList })
+	      React.createElement(Route, { path: "posts", component: PostList }),
+	      React.createElement(Route, { path: "search", component: Search })
 	    )
 	  ), $("main")[0]
 	  // don't NEED jQuery but it's nice
@@ -8003,10 +8005,6 @@
 	  }
 	};
 	
-	function registerNullComponentID() {
-	  ReactEmptyComponentRegistry.registerNullComponentID(this._rootNodeID);
-	}
-	
 	var ReactEmptyComponent = function (instantiate) {
 	  this._currentElement = null;
 	  this._rootNodeID = null;
@@ -8015,7 +8013,7 @@
 	assign(ReactEmptyComponent.prototype, {
 	  construct: function (element) {},
 	  mountComponent: function (rootID, transaction, context) {
-	    transaction.getReactMountReady().enqueue(registerNullComponentID, this);
+	    ReactEmptyComponentRegistry.registerNullComponentID(rootID);
 	    this._rootNodeID = rootID;
 	    return ReactReconciler.mountComponent(this._renderedComponent, rootID, transaction, context);
 	  },
@@ -18738,7 +18736,7 @@
 	
 	'use strict';
 	
-	module.exports = '0.14.8';
+	module.exports = '0.14.7';
 
 /***/ },
 /* 147 */
@@ -31759,8 +31757,10 @@
 
 	var AppDispatcher = __webpack_require__(236);
 	var PostActions = __webpack_require__(241);
+	var SearchResultActions = __webpack_require__(242);
 	
 	var ApiUtil = {
+	
 	  fetchPosts: function () {
 	    $.ajax({
 	      type: "GET",
@@ -31773,7 +31773,24 @@
 	        console.log("Api#fetch error!");
 	      }
 	    });
+	  },
+	
+	  search: function (query, page) {
+	    $.ajax({
+	      type: "GET",
+	      url: "/api/searches",
+	      dataType: "json",
+	      data: { query: query, page: page },
+	      success: function (response) {
+	        SearchResultActions.receiveResults(response);
+	      },
+	      error: function () {
+	        console.log("ApiUtil#search error!");
+	      }
+	
+	    });
 	  }
+	
 	};
 	
 	module.exports = ApiUtil;
@@ -31801,11 +31818,41 @@
 /* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var AppDispatcher = __webpack_require__(236);
+	var SearchResultConstants = __webpack_require__(243);
+	
+	var SearchResultActions = {
+	  receiveResults: function (response) {
+	    var action = {
+	      actionType: SearchResultConstants.SEARCH_RESULTS_RECEIVED,
+	      searchResults: response.search_results,
+	      meta: response.meta
+	    };
+	    AppDispatcher.dispatch(action);
+	  }
+	};
+	
+	module.exports = SearchResultActions;
+
+/***/ },
+/* 243 */
+/***/ function(module, exports) {
+
+	var SearchResultConstants = {
+	  SEARCH_RESULTS_RECEIVED: "SEARCH_RESULTS_RECEIVED"
+	};
+	
+	module.exports = SearchResultConstants;
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var React = __webpack_require__(1);
 	var PostStore = __webpack_require__(217);
 	// var AppDispatcher = require('../dispatcher/app_dispatcher');
 	var ApiUtil = __webpack_require__(240);
-	var Funny = __webpack_require__(243);
+	var Funny = __webpack_require__(245);
 	
 	var PostShow = React.createClass({
 	  displayName: "PostShow",
@@ -31883,7 +31930,7 @@
 	module.exports = PostShow;
 
 /***/ },
-/* 243 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -31902,6 +31949,148 @@
 	});
 	
 	module.exports = Funny;
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var SearchResultsStore = __webpack_require__(247);
+	var ApiUtil = __webpack_require__(240);
+	
+	var Search = React.createClass({
+	  displayName: "Search",
+	
+	
+	  getInitialState: function () {
+	    return { query: "" };
+	  },
+	
+	  componentDidMount: function () {
+	    this.storeListener = SearchResultsStore.addListener(this._onChange);
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.storeListener.remove();
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ results: SearchResultsStore.all() });
+	  },
+	
+	  handleInputChange: function (e) {
+	    var query = e.currentTarget.value;
+	    this.setState({ query: query }, function () {
+	      if (query.length > 2) {
+	        this.search();
+	      }
+	    }.bind(this));
+	  },
+	
+	  search: function (e) {
+	    ApiUtil.search(this.state.query, 1);
+	  },
+	
+	  nextPage: function () {
+	    var meta = SearchResultsStore.meta();
+	    ApiUtil.search(meta.query, meta.page + 1);
+	  },
+	
+	  resultLis: function () {
+	    return SearchResultsStore.all().map(function (result) {
+	      if (result._type === "Post") {
+	        return React.createElement(
+	          "li",
+	          { key: result.id },
+	          "Post #",
+	          result.id,
+	          ": ",
+	          result.title
+	        );
+	      } else {
+	        return React.createElement(
+	          "li",
+	          { key: result.id },
+	          "Author #",
+	          result.id,
+	          ": ",
+	          result.name
+	        );
+	      }
+	    });
+	  },
+	
+	  render: function () {
+	    var meta = SearchResultsStore.meta();
+	    return React.createElement(
+	      "article",
+	      null,
+	      React.createElement("input", { type: "text", onChange: this.handleInputChange }),
+	      React.createElement(
+	        "button",
+	        { onClick: this.search },
+	        "GO"
+	      ),
+	      React.createElement(
+	        "nav",
+	        null,
+	        "Displaying page ",
+	        meta.page,
+	        " of ",
+	        meta.total_pages,
+	        React.createElement(
+	          "button",
+	          { onClick: this.nextPage },
+	          "NEXT PAGE"
+	        )
+	      ),
+	      React.createElement(
+	        "ul",
+	        null,
+	        this.resultLis()
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = Search;
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(218).Store;
+	var AppDispatcher = __webpack_require__(236);
+	var SearchResultConstants = __webpack_require__(243);
+	
+	var SearchResultsStore = new Store(AppDispatcher);
+	
+	// debugger
+	
+	var _searchResults = [];
+	var _meta = {};
+	
+	SearchResultsStore.all = function () {
+	  return _searchResults.slice();
+	};
+	
+	SearchResultsStore.meta = function () {
+	  return $.extend(true, {}, _meta);
+	};
+	
+	SearchResultsStore.__onDispatch = function (payload) {
+	
+	  switch (payload.actionType) {
+	    case SearchResultConstants.SEARCH_RESULTS_RECEIVED:
+	      _searchResults = payload.searchResults;
+	      _meta = payload.meta;
+	      SearchResultsStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = SearchResultsStore;
 
 /***/ }
 /******/ ]);

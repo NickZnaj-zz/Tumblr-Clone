@@ -27,5 +27,6 @@ Rails.application.routes.draw do
   # EVERYTHING WILL BE UNDER API NAMESPACE!!! MWAHAHA!!! (except for that root thing)
   namespace :api, defaults: {format: :json} do
     resources :posts, only: [:index]
+    resources :searches, only: [:index]
   end
 end

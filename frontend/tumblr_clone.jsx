@@ -4,7 +4,7 @@ var ReactRouter = require("react-router");
 
 var PostList = require("./components/post_list.jsx");
 var PostShow = require("./components/post_show.jsx");
-
+var Search = require("./components/search.jsx");
 
 
 var Router = ReactRouter.Router;
@@ -48,6 +48,8 @@ window.initializeApp = function () {
         <Route path="posts/:id" component={PostShow} />
 
         <Route path="posts" component={PostList} />
+    
+        <Route path="search" component={Search} />
       </Route>
     </Router>,
     $("main")[0]

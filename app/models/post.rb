@@ -1,4 +1,7 @@
 class Post < ActiveRecord::Base
+  include PgSearch
+  multisearchable :against => [:title, :body]
+  
   validates :title, :body, :author_id, presence: true
 
   belongs_to(
