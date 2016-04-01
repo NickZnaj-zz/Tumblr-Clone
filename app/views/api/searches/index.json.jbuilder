@@ -1,6 +1,6 @@
 json.meta do
   json.total_pages @search_results.total_pages
-  json.query(params[:query] || "")
+  json.query params[:query]
   json.page @search_results.current_page
 end
 

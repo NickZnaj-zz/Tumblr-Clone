@@ -4,8 +4,6 @@ var SearchResultConstants = require('../constants/search_result_constants');
 
 var SearchResultsStore = new Store(AppDispatcher);
 
-// debugger
-
 var _searchResults = [];
 var _meta = {};
 

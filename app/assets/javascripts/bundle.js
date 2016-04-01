@@ -32066,8 +32066,6 @@
 	
 	var SearchResultsStore = new Store(AppDispatcher);
 	
-	// debugger
-	
 	var _searchResults = [];
 	var _meta = {};
 	
